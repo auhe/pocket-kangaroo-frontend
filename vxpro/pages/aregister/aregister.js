@@ -1,4 +1,4 @@
-Page({
+  Page({
 
   data: {
 
@@ -6,12 +6,27 @@ Page({
 
     password: '',
 
+    password2:'',
+
     name: '',
 
-    sex: ''
+    sex: '',
+
+    sexs:[
+      {num:'0',value:"男"},
+      {num:'1',value:"女"},
+    ]
 
   },
 
+
+
+  radioChange:function(e){
+    this.setData({
+      sex:e.detail.value,
+    })
+    console.log(e.detail.value)
+  },
 
 
   // 获取输入手机号 
@@ -65,12 +80,24 @@ Page({
   },
 
 
+  // 获取输入密码2 
+
+  passwordInput2: function (e) {
+
+    this.setData({
+
+      password2: e.detail.value
+
+    })
+
+  },
+
 
   // 登录 
 
   comfirmreg: function () {
     //验证手机号
-    var reg = /^[1](([3][0-9])|([4][5,7,9])|([5][4,6,9])|([6][6])|([7][3,5,6,7,8])|([8][0-9])|([9][8,9]))[0-9]{8}$/
+    var reg = /^1(?:(3[0-9])|(4[5-7])|(5[0-9])|(7[0-9])|(8[0-9]))+\d{8}$/
     var r = this.data.phone.match(reg)
     //验证密码
     var reg2 = /(?=[a-zA-Z0-9!@#$%^&*]{8,16})^.*(?=([0-9](?=[a-zA-Z!@#$%^&*]))|([!@#$%^&*](?=[a-zA-Z0-9]))|([a-zA-Z](?=[0-9!@#$%^&*]))).*$/
@@ -114,8 +141,6 @@ Page({
 
         duration: 2000
       })
-    
-
     } 
     else if (r3 == null) {
       wx.showToast({
@@ -126,26 +151,53 @@ Page({
 
         duration: 2000
       })
-
-
+    }
+    else if(this.data.password!=this.data.password2){
+      wx.showToast({
+        title:'两次密码不相同',
+        icon:'loading',
+        duration:2000
+      })
     } 
     else {
 
-      // 这里修改成跳转的页面 
+      // 这里修改成跳转的页面
+      wx.request({
+        url: 'http://118.89.117.52/user/register',
+        data: { phone: this.data.phone,name:this.data.name, password: this.data.password ,sex:this.data.sex},
+        method: 'POST',
+        success: function (res) {
+          if (res.statusCode == 200) {
+            if (res.data.success) {
+              console.log("111");
+              wx.navigateTo({
+                url: '../alogin/alogin',
+              })
+              wx.showToast({
+                title: '注册成功',
+                icon: 'success',
+                duration: 2000
+              })
+            } else {    
+              console.log("222");
+              wx.showToast({
+                title: res.data.description,
+                icon: 'loading',
+                duration: 2000
+              })
+            }
+          }
+          else {
+            console.log("aregister.js wx.request" + res.statusCode);
+          }
+        },
+        fail: function () {
+          console.log("aregister.js wx.request CheckCallUser fail");
+        },
+        complete: function () {
 
-      wx.showToast({
-
-        title: '注册成功',
-
-        icon: 'success',
-
-        duration: 2000
-
+        }
       })
-      wx.navigateTo({
-        url: '../alogin/alogin',
-      })
-
     }
 
   }

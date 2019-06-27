@@ -25,18 +25,17 @@
 
 
   <!--性别-->
-
-  <view class="inputView"> 
-
+<view class="inputView0">
   <image class="keyImage" src="../../icons/ico-sex.png"></image> 
+  <label class="loginLab">性别</label>
+<radio-group class='radio-group' bindchange="radioChange">
+    <radio  class='radio'style='margin-left: 11px;' wx:for-items="{{sexs}}" wx:key="num" value="{{item.num}}" checked="{{item.checked}}">
+    <text class="loginLab" style='margin-left: 0px;'>{{item.value}}</text>
+    </radio>
+</radio-group>
 
-  <label class="loginLab">性别</label> 
-
-  <input class="inputText"  placeholder="请输入性别" bindinput="sexInput" /> 
-
- </view>  
-
- <view class="line"></view> 
+</view>
+<view class="line"></view> 
 
 
  <!--手机号-->
@@ -67,9 +66,20 @@
 
  </view> 
 
+  <view class="line"></view> 
 
 
- 
+ <!--再输入密码-->
+
+ <view class="inputView"> 
+
+  <image class="keyImage" src="../../icons/u2.png"></image> 
+
+  <label class="loginLab">重复密码</label> 
+
+  <input class="inputText" password="true" placeholder="请再输入密码" bindinput="passwordInput2" /> 
+
+ </view>  
 
 
   

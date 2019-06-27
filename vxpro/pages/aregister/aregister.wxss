@@ -4,6 +4,16 @@ page{
 
 } 
 
+radio{
+  margin-top: 0px;
+}
+
+.radio-group{
+  margin-left: auto;
+  align-items: center;
+  padding: 10px 15px 10px 0px;
+}
+
   
 
 .container { 
@@ -34,7 +44,7 @@ page{
 
 .login-img{ 
 
- margin-top: 50px;
+ margin-top: 30px;
 
  width: 50px; 
 
@@ -59,41 +69,62 @@ page{
   
 
 .inputView { 
+display: flex;
+ align-items: center;
+ background-color: #fff; 
+ line-height: 44px; 
 
+} 
+
+.inputView0 { 
+ display: flex;
+ align-items: center;
  background-color: #fff; 
 
- line-height: 44px; 
+
+ 
 
 } 
 
 /*输入框*/
 
 .nameImage, .keyImage { 
-
  margin-left: 18px; 
-
- margin-top:10px;
-
+ float: left;
  width: 20px; 
-
- height: 20px
+ height: 20px;
 
 } 
+
 
   
 
 .loginLab { 
-
- margin: 15px 15px 15px 10px; 
+align-items: center;
+ margin-left: 15px; 
 
  color: #545454; 
 
- font-size: 14px
+ font-size: 14px;
+
+ 
+
+} 
+
+.loginLab0 { 
+
+margin-left: 15px; 
+
+ color: #545454; 
+
+ font-size: 14px;
+
+ display:flex;
 
 } 
 
 .inputText { 
-
+margin-left: auto;
  flex: block; 
 
  float: right; 
@@ -101,8 +132,6 @@ page{
  text-align: right; 
 
  margin-right: 22px; 
-
- margin-top: 11px; 
 
  color: #cccccc; 
 
