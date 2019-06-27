@@ -14,7 +14,93 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) { },
+  onLoad: function (options) { 
+    var that = this;
+    wx.request({
+      url: 'http://118.89.117.52/transaction/short/receive_doing',
+      method: 'GET',
+      header: {
+        //'authorization': wx.getStorageSync("token")
+        'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJLYW5nYXJvbyBCYWNrdXAiLCJpYXQiOjE1NjExMzE0OTAxNzcsImV4cCI6MTU2MzcyMzQ5MDE3NywidXNlcklkIjoxLCJqd3RJZCI6MX0.qDg34GTZYjr_OKXHPJirdznEKPzya_TYL4Gulvnqgfo'
+      },
+      success: function (res) {
+        console.log(res.data)
+        if (res.statusCode == 200) {
+          if (res.data.success == true) {
+            wx.showToast({
+              title: '成功',
+              icon: 'success',
+              duration: 1000
+            })
+            console.log(res.data.result.tasks)
+            that.setData({
+              tasks: res.data.result.transactions
+            })
+            console.log(that.data);
+          }
+          else {
+            wx.showToast({
+              title: res.data.description,
+              icon: 'loading',
+              duration: 500
+            
+            })
+            console.log(res.data.description)
+          }
+        }
+        else {
+          console.log("alogin.js wx.request" + res.statusCode);
+        }
+      },
+      fail: function () {
+        console.log("alogin.js wx.request CheckCallUser fail");
+      },
+      complete: function () {
+
+      }
+    })
+    wx.request({
+      url: 'http://118.89.117.52/task/short/release_doing',
+      method: 'GET',
+      header: {
+        //'authorization': wx.getStorageSync("token")
+        'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJLYW5nYXJvbyBCYWNrdXAiLCJpYXQiOjE1NjExMzE0OTAxNzcsImV4cCI6MTU2MzcyMzQ5MDE3NywidXNlcklkIjoxLCJqd3RJZCI6MX0.qDg34GTZYjr_OKXHPJirdznEKPzya_TYL4Gulvnqgfo'
+      },
+      success: function (res) {
+        console.log(wx.getStorageSync("token"))
+        if (res.statusCode == 200) {
+          if (res.data.success == true) {
+            wx.showToast({
+              title: '成功',
+              icon: 'success',
+              duration: 1000
+            })
+            console.log(res.data.result.tasks)
+            that.setData({
+              tasks1: res.data.result.tasks
+            })
+            console.log(that.data);
+          }
+          else {
+            wx.showToast({
+              title: res.data.description,
+              icon: 'loading',
+              duration: 500
+            })
+          }
+        }
+        else {
+          console.log("alogin.js wx.request" + res.statusCode);
+        }
+      },
+      fail: function () {
+        console.log("alogin.js wx.request CheckCallUser fail");
+      },
+      complete: function () {
+
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -67,68 +153,67 @@ Page({
         break
     }
   },
+
+
+
   alreadyShow: function () {
-    this.setData({
-      alreadyOrder: [
-        {
-          name: "陈吉凡", state: "进行", time: "2018-09-30 14:00-16:00", status: "跑腿", url: "../../icons/1.jpg", money: "132",
-          title:"东校区救命", short_description: "我要爆炸了，有没...", 
-        taskid:"1" ,discrib:""
-        },
-        {
-          name: "陈金坤", state: "进行", time: "2018-10-12 18:00-20:00", status: "跑腿", url: "../../images/bad3.jpg", money: "205",
-        taskid: "2"
-        },
-        {
-          name: "陈泓霖", state: "进行", time: "2018-09-30 14:00-16:00", status: "跑腿", url: "../../icons/1.jpg", money: "132",
-         taskid:"3"
-        },
-        {
-          name: "陈吉凡傻逼", state: "进行", time: "2018-09-30 14:00-16:00", status: "跑腿", url: "../../icons/1.jpg", money: "132",
-          taskid: "4"
-        },
-        {
-          name: "弱智陈吉凡", state: "进行", time: "2018-09-30 14:00-16:00", status: "跑腿", url: "../../icons/1.jpg", money: "132",
-          taskid: "5"
-        },
-      ]
-    })
   },
 
   waitPayShow: function () {
-    this.setData({
-      waitPayOrder: [
-        {
-          name: "陈吉凡", state: "进行", time: "2018-09-30 14:00-16:00", status: "跑腿", url: "../../icons/1.jpg", money: "132",
-          taskid: "1"
-        },
-        {
-          name: "陈金坤", state: "进行", time: "2018-10-12 18:00-20:00", status: "跑腿", url: "../../images/bad3.jpg", money: "205",
-          taskid: "2"
-        },
-        {
-          name: "陈泓霖", state: "进行", time: "2018-09-30 14:00-16:00", status: "跑腿", url: "../../icons/1.jpg", money: "132",
-          taskid: "3"
-        },
-        {
-          name: "陈吉凡傻逼", state: "进行", time: "2018-09-30 14:00-16:00", status: "跑腿", url: "../../icons/1.jpg", money: "132",
-          taskid: "4"
-        },
-        {
-          name: "弱智陈吉凡", state: "进行", time: "2018-09-30 14:00-16:00", status: "跑腿", url: "../../icons/1.jpg", money: "132",
-          taskid: "5"
-        },
-      ]
-    })
   },
+
+
   done:function(e){
-    console.log(e.target.dataset.taskid)
+    var that = this
     wx.showModal({
       title: '确定完成？',
       content: '等待发布者确认完成后即可得到报酬',
       success: function (res) {
         if (res.confirm) {
-          console.log(e.target.dataset.taskid)
+          wx.request({
+            url: 'http://118.89.117.52/transaction/' + e.target.dataset.taskid,
+            method: 'PUT',
+            data: {committion:'asdasd'},
+            header: {
+              //'authorization': wx.getStorageSync("token")
+              'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJLYW5nYXJvbyBCYWNrdXAiLCJpYXQiOjE1NjExMzE0OTAxNzcsImV4cCI6MTU2MzcyMzQ5MDE3NywidXNlcklkIjoxLCJqd3RJZCI6MX0.qDg34GTZYjr_OKXHPJirdznEKPzya_TYL4Gulvnqgfo'
+            },
+            success: function (res) {
+              console.log(res.data)
+              if (res.statusCode == 200) {
+                if (res.data.success == true) {
+                  wx.showToast({
+                    title: '成功',
+                    icon: 'success',
+                    duration: 1000,
+
+                  })
+                  that.onLoad()
+                }
+                else {
+                  wx.showToast({
+                    title: res.data.description,
+                    icon: 'loading',
+                    duration: 500
+
+                  })
+                }
+              }
+              else {
+                console.log("alogin.js wx.request" + res.statusCode);
+              }
+            },
+            fail: function () {
+              console.log("alogin.js wx.request CheckCallUser fail");
+            },
+            complete: function () {
+
+            }
+
+
+
+
+          })
         }
       }
     }) 
@@ -138,28 +223,103 @@ Page({
 
 
   undo: function (e) {
+    var that = this;
     console.log(e.target.dataset.taskid)
     wx.showModal({
       title: '确定放弃？',
-      content: '放弃后可以通过历史任务查看',
+      content: '放弃后可以通过历史交易单查看',
       success: function (res) {
         if (res.confirm) {
-          console.log(e.target.dataset.taskid)
+          wx.request({
+            url: 'http://118.89.117.52/transaction/' + e.target.dataset.taskid,
+            method: 'DELETE',
+            header: {
+              //'authorization': wx.getStorageSync("token")
+              'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJLYW5nYXJvbyBCYWNrdXAiLCJpYXQiOjE1NjExMzE0OTAxNzcsImV4cCI6MTU2MzcyMzQ5MDE3NywidXNlcklkIjoxLCJqd3RJZCI6MX0.qDg34GTZYjr_OKXHPJirdznEKPzya_TYL4Gulvnqgfo'
+            },
+            success: function (res) {
+              console.log(res.data)
+              if (res.statusCode == 200) {
+                if (res.data.success == true) {
+                  wx.showToast({
+                    title: '成功',
+                    icon: 'success',
+                    duration: 1000,
+                  })
+                  that.onLoad()
+                }
+                else {
+                  wx.showToast({
+                    title: res.data.description,
+                    icon: 'loading',
+                    duration: 500
+                  })
+                }
+              }
+              else {
+                console.log("请求非200" + res.statusCode);
+              }
+            },
+            fail: function () {
+              console.log("alogin.js wx.request CheckCallUser fail");
+            },
+            complete: function () {
+
+            }
+
+          })
         }
       }
-    })
-    /*wx.navigateTo({
-    })*/
+    }) 
   },
 
   fabudone: function (e) {
-    console.log(e.target.dataset.taskid)
+    var that = this;
+    console.log("sas" + e.target.dataset.taskid)
     wx.showModal({
       title: '确定完成？',
-      content: '确认完成将支付报酬',
+      content: '确认完成将结算所有已完成的交易单',
       success: function (res) {
         if (res.confirm) {
-          console.log(e.target.dataset.taskid)
+          wx.request({
+            url: 'http://118.89.117.52/task/' + e.target.dataset.taskid,
+            method: 'PUT',
+            header: {
+              //'authorization': wx.getStorageSync("token")
+              'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJLYW5nYXJvbyBCYWNrdXAiLCJpYXQiOjE1NjExMzE0OTAxNzcsImV4cCI6MTU2MzcyMzQ5MDE3NywidXNlcklkIjoxLCJqd3RJZCI6MX0.qDg34GTZYjr_OKXHPJirdznEKPzya_TYL4Gulvnqgfo'
+            },
+            success: function (res) {
+              console.log('com--' + res)
+              if (res.statusCode == 200) {
+                if (res.data.success == true) {
+                  console.log('com--111')
+                  wx.showToast({
+                    title: '成功',
+                    icon: 'success',
+                    duration: 1000,
+                  });
+                  that.onLoad();
+                }
+                else {
+                  wx.showToast({
+                    title: res.data.description,
+                    icon: 'loading',
+                    duration: 500
+                  })
+                }
+              }
+              else {
+                console.log("请求非200" + res.statusCode);
+              }
+            },
+            fail: function () {
+              console.log("alogin.js wx.request CheckCallUser fail");
+            },
+            complete: function () {
+
+            }
+
+          })
         }
       }
     })
@@ -168,13 +328,51 @@ Page({
   },
 
   fabundo: function (e) {
+    var that = this;
     console.log(e.target.dataset.taskid)
     wx.showModal({
-      title: '确定放弃发布？',
-      content: '放弃后可通过历史任务查看',
+      title: '确定放弃？',
+      content: '放弃后可通过历史任务查看。已完成的交易单无法放弃并且将会正常结算，系统将返还结算剩余的袋鼠币',
       success: function (res) {
         if (res.confirm) {
-          console.log(e.target.dataset.taskid)
+          wx.request({
+            url: 'http://118.89.117.52/task/' + e.target.dataset.taskid,
+            method: 'DELETE',
+            header: {
+              //'authorization': wx.getStorageSync("token")
+              'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJLYW5nYXJvbyBCYWNrdXAiLCJpYXQiOjE1NjExMzE0OTAxNzcsImV4cCI6MTU2MzcyMzQ5MDE3NywidXNlcklkIjoxLCJqd3RJZCI6MX0.qDg34GTZYjr_OKXHPJirdznEKPzya_TYL4Gulvnqgfo'
+            },
+            success: function (res) {
+              console.log(res.data)
+              if (res.statusCode == 200) {
+                if (res.data.success == true) {
+                  wx.showToast({
+                    title: '成功',
+                    icon: 'success',
+                    duration: 1000,
+                  })
+                  that.onLoad()
+                }
+                else {
+                  wx.showToast({
+                    title: res.data.description,
+                    icon: 'loading',
+                    duration: 500
+                  })
+                }
+              }
+              else {
+                console.log("请求非200" + res.statusCode);
+              }
+            },
+            fail: function () {
+              console.log("alogin.js wx.request CheckCallUser fail");
+            },
+            complete: function () {
+
+            }
+
+          })
         }
       }
     })
@@ -183,12 +381,12 @@ Page({
   },
 
   discrib: function(e){
-    console.log(e.currentTarget.dataset.taskid)
+    console.log(e.currentTarget.dataset)
     var data = e.currentTarget.dataset.taskid
     wx.setStorageSync('data', data)
     wx.navigateTo({
       
-      url:"../logs/logs"
+      url: '../logs/logs?taskid=' + e.currentTarget.dataset.taskid
       
     })
     
